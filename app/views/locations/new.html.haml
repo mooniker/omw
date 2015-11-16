@@ -1,0 +1,9 @@
+%h2 Location#new
+%p Where are you?
+%div{ onclick: "geoFindMe()"} Click Me
+#out
+= form_for(@location, method: 'post') do |f|
+  .board_form
+    = f.text_field :lat
+    = f.text_field :lon
+    = f.submit

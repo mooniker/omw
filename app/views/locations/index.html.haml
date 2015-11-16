@@ -1,0 +1,6 @@
+%h2 Location#index (listing of location requests)
+%ul
+  - @locations.each do |location|
+    %li
+      = location.lat
+      , #{location.lon}
