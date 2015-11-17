@@ -1,0 +1,17 @@
+%h3
+  = stop['Name']
+  = stop['StopID']
+  = stop['Lat']
+  = stop['Lon']
+%table
+  %thead
+    %tr
+      %th min
+      %th route
+      %th to where
+  %tbody
+    - stop[:Predictions].each do |p|
+      %tr
+        %td= p['Minutes']
+        %td= p['RouteID']
+        %td= p['DirectionText']

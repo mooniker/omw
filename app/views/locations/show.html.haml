@@ -2,22 +2,4 @@
 %p= @location.lat
 %p= @location.lon
 
-%ul
-  - @stops.each do |stop|
-    %h3
-      = stop['Name']
-      = stop['StopID']
-      = stop['Lat']
-      = stop['Lon']
-    %table
-      %thead
-        %tr
-          %th when
-          %th what
-          %th to where
-      %tbody
-        - stop[:Predictions].each do |p|
-          %tr
-            %td= p['Minutes']
-            %td= p['RouteID']
-            %td= p['DirectionText']
+= render partial: 'stop', collection: @stops
