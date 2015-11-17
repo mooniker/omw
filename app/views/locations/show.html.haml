@@ -1,3 +1,18 @@
 %h3 Location#show
 %p= @location.lat
 %p= @location.lon
+
+%h3
+%ul
+  - @stops.each do |stop|
+    %li StopID:
+    = stop['StopID']
+    %ul
+      %li Name:
+      = stop['Name']
+      %li Lon:
+      = stop['Lon']
+      %li Lat:
+      = stop['Lat']
+      %li Routes:
+      = stop['Routes'].join(', ')

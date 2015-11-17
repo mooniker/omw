@@ -4,3 +4,14 @@
     %li
       = location.lat
       , #{location.lon}
+%h2 Routes
+%table
+  %thead
+    %tr
+      - @route_attributes.each do |attribute|
+        %th= attribute
+  %tbody
+  - @routes.each do |route|
+    %tr
+      - @route_attributes.each do |attribute|
+        %td= route[attribute]
