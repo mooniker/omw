@@ -1,0 +1,15 @@
+= form_for :dashboard, url: dashboards_path do |f|
+  - if @dashboard.errors.any?
+    #error_explanation
+      %h3
+        = pluralize(@dashboard.errors.count, "error")
+        prohibited this dashboard from being saved:
+      %ul
+        - @dashboard.errors.full_messages.each do |msg|
+          %li= msg
+  = f.label :title
+  = f.text_field :title
+  = f.label :desc
+  = f.text_field :desc
+  = f.submit
+= link_to 'back', dashboards_path

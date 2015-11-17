@@ -1,0 +1,4 @@
+%h2 Public Dashboards
+%ul
+  - @dashboards.each do |d|
+    = link_to d.title, d
