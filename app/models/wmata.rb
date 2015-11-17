@@ -26,7 +26,12 @@ class Wmata
 
   def get_predictions(stop_id)
     uri_with_params = "https://api.wmata.com/NextBusService.svc/json/jPredictions?StopID=#{stop_id}"
-    puts uri_with_params
+    response = self.class.get(uri_with_params, @options)
+    JSON.parse(response.body)
+  end
+
+  def get_predictions_x(stop_id)
+    uri_with_params = "https://api.wmata.com/NextBusService.svc/json/jPredictions?StopID=#{stop_id}"
     response = self.class.get(uri_with_params, @options)
     JSON.parse(response.body)['Predictions']
   end
@@ -35,7 +40,8 @@ class Wmata
     bus_stops = self.get_bus_stops(lat, lon, radius)
     bus_stops.each do |stop|
       s = stop['StopID']
-      stop.merge!('Predictions': self.get_predictions(s))
+      stop.merge!('Predictions': self.get_predictions_x(s))
+      # stop.merge!(self.get_predictions(s))
     end
     return bus_stops
   end

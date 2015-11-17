@@ -6,6 +6,11 @@ class DashboardsController < ApplicationController
 
   def show
     @dashboard = Dashboard.find(params[:id])
+    stop_ids = @dashboard.stop_id_str.strip.split
+    @predictions = []
+    stop_ids.each do |stop|
+      @predictions << Wmata.new(ENV['wmata_api_key']).get_predictions(stop)
+    end # why does this nest like this?
   end
 
   def new
