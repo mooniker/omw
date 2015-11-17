@@ -13,6 +13,7 @@ class DashboardsController < ApplicationController
   end
 
   def edit
+    @dashboard.find_by(params[:id])
   end
 
   def create
@@ -20,6 +21,8 @@ class DashboardsController < ApplicationController
     puts params, dashboard_params
     if @dashboard.save
       redirect_to @dashboard
+    else
+      render 'new'
     end
   end
 
@@ -27,6 +30,9 @@ class DashboardsController < ApplicationController
   end
 
   def destroy
+    @dashboard = Dashboard.find(params[:id])
+    @dashboard.destroy
+    redirect_to dashboards_path
   end
 
   private

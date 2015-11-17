@@ -1,4 +1,12 @@
 %h2 Public Dashboards
-%ul
-  - @dashboards.each do |d|
-    = link_to d.title, d
+%table
+  %thead
+    %tr
+      %th Name
+      %th{colspan: 2}
+  %tbody
+    - @dashboards.each do |d|
+      %tr
+        %td= link_to d.title, d
+        %td= link_to 'edit', edit_dashboard_path(d)
+        %td= link_to 'delete', dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' }
