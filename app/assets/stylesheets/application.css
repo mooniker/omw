@@ -14,7 +14,7 @@
  *= require_self
  */
 
-.bus_stop {
+.bus_stop, .bus_stop_card {
   display: inline-block;
   border: solid 1px darkgreen;
 }

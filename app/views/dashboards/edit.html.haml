@@ -1,4 +1,4 @@
 %h2 Edit Dashboard?
 = render 'form'
-= link_to 'edit', edit_dashboard_path(@dashboard)
+= link_to 'delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }
 = link_to 'back', dashboards_path
