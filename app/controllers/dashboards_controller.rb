@@ -13,7 +13,7 @@ class DashboardsController < ApplicationController
   end
 
   def edit
-    @dashboard.find_by(params[:id])
+    @dashboard = Dashboard.find(params[:id])
   end
 
   def create
@@ -37,7 +37,7 @@ class DashboardsController < ApplicationController
 
   private
     def dashboard_params
-      params.require(:dashboard).permit(:title, :desc)
+      params.require(:dashboard).permit(:title, :desc, :stop_id_str)
     end
 
 end
