@@ -1,9 +1,10 @@
-%h2= @dashboard.title
-%p= @dashboard.desc
-%p= @dashboard.stop_id_str
--# = @predictions.inspect
-= link_to 'edit', edit_dashboard_path(@dashboard)
-= link_to 'delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }
+#dashboard_header
+  %h2= @dashboard.title
+  %p= @dashboard.desc
+  %p= "Viewing Arrival Times for These Stop #s: #{@dashboard.stop_id_str}"
+  -# = @predictions.inspect
+  = link_to 'edit', edit_dashboard_path(@dashboard)
+  = link_to 'delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }
 - @predictions.each do |stop|
   .bus_stop_card
     %h3= "Stop Name: #{stop['StopName']}"
