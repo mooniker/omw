@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+.bus_stop {
+  display: inline-block;
+  border: solid 1px darkgreen;
+}
