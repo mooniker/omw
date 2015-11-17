@@ -2,17 +2,22 @@
 %p= @location.lat
 %p= @location.lon
 
-%h3
 %ul
   - @stops.each do |stop|
-    %li StopID:
-    = stop['StopID']
-    %ul
-      %li Name:
+    %h3
       = stop['Name']
-      %li Lon:
-      = stop['Lon']
-      %li Lat:
+      = stop['StopID']
       = stop['Lat']
-      %li Routes:
-      = stop['Routes'].join(', ')
+      = stop['Lon']
+    %table
+      %thead
+        %tr
+          %th when
+          %th what
+          %th to where
+      %tbody
+        - stop[:Predictions].each do |p|
+          %tr
+            %td= p['Minutes']
+            %td= p['RouteID']
+            %td= p['DirectionText']
