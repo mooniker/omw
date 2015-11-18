@@ -1,0 +1,17 @@
+%h2 Bus Stops
+%table
+  %thead
+    %tr
+      %th Lat
+      %th Long
+      %th StopID
+      %th Name
+      %th Routes
+  %tbody
+    - @stops.each do |s|
+      %tr
+        %td= s['Lat']
+        %td= s['Lon']
+        %td= s['StopID']
+        %td= s['Name']
+        %td= s.get_routes_string

@@ -6,10 +6,22 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+
+# {"Routes": [{"LineDescription": "Hunting Point-Pentagon Line",
+#              "Name": "10A - HUNTING POINT -PENTAGON", "RouteID": "10A"}, ...
 routes_json = JSON.parse(File.read('routes.json'))
 
 routes_json['Routes'].each do |route|
   Route.create!(route)
 end
 
-# route_json = {"Routes": [{"LineDescription": "Hunting Point-Pentagon Line", "Name": "10A - HUNTING POINT -PENTAGON", "RouteID": "10A"}, {"LineDescription": "Hunting Point-Pentagon Line", "Name": "10A - PENDELTON+COLUMBUS-PENTAGON", "RouteID": "10Av1"}]}
+# {"Stops": [{"Lat": 38.670006, "StopID": "3000037", "Lon": -77.010283,
+#             "Name": "LIVINGSTON RD + INDIAN HEAD HWY", "Routes": ["W19"]}, ...
+stops_json = JSON.parse(File.read('bus_stops.json'))
+
+stops_json['Stops'].each do |stop|
+  new_stop = Stop.create!(stop.except('Routes'))
+  stop['Routes'].each do |route|
+    Route.find_by(RouteID: route).connections.create!(stop_id: new_stop.id)
+  end
+end

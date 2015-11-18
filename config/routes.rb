@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'stops/index'
+
   devise_for :users
   get 'from/where' => 'locations#new'
   get 'routes' => 'routes#index'
+  get 'stops' => 'stops#index'
   # root 'welcome#index'
   root 'dashboards#index'
 
