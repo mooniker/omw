@@ -18,3 +18,12 @@
   display: inline-block;
   border: solid 1px darkgreen;
 }
+
+header ul, header li {
+  list-style: none;
+  display: inline;
+}
+header li {
+  border: black 1px solid;
+  margin: 2em;
+}
