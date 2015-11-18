@@ -25,3 +25,9 @@ stops_json['Stops'].each do |stop|
     Route.find_by(RouteID: route).connections.create!(stop_id: new_stop.id)
   end
 end
+
+# create GA dashboard
+# 38.9049836
+# -77.0336719
+# 1001294 1001325 1001221
+# 1133 15th St NW

@@ -54,7 +54,7 @@ class DashboardsController < ApplicationController
 
   private
     def dashboard_params
-      params.require(:dashboard).permit(:title, :desc, :stop_id_str)
+      params.require(:dashboard).permit(:title, :address, :desc, :public, :lat, :lon, :stop_id_str)
     end
 
 end

@@ -9,8 +9,16 @@
           %li= msg
   = f.label :title
   = f.text_field :title
+  = f.label :address
+  = f.text_field :address
   = f.label :desc
   = f.text_field :desc
+  = f.label :public
+  = f.check_box :public
+  = f.label :lat
+  = f.text_field :lat
+  = f.label :lon
+  = f.text_field :lon
   = f.label :stop_id_str
   = f.text_field :stop_id_str
   = f.submit

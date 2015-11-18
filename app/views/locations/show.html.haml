@@ -2,12 +2,13 @@
 %p
   = @location.lat
   = @location.lon
+  = @stops
 
 -# = render partial: 'stop', collection: @stops
 
 - @predictions.each do |stop|
   .bus_stop_card
-    %h3= "Stop Name: #{stop['StopName']}"
+    %h3= "#{stop['StopName']}"
     %table
       %thead
         %tr
