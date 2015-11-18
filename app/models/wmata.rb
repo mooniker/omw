@@ -36,13 +36,13 @@ class Wmata
     JSON.parse(response.body)['Predictions']
   end
 
-  def get_departure_times_for_nearby_bus_stops(lat, lon, radius)
-    bus_stops = self.get_bus_stops(lat, lon, radius)
-    bus_stops.each do |stop|
-      s = stop['StopID']
-      stop.merge!('Predictions': self.get_predictions_x(s))
+  # def get_departure_times_for_nearby_bus_stops(lat, lon, radius)
+  #   bus_stops = self.get_bus_stops(lat, lon, radius)
+  #   bus_stops.each do |stop|
+  #     s = stop['StopID']
+  #     stop.merge!('Predictions': self.get_predictions_x(s))
       # stop.merge!(self.get_predictions(s))
-    end
-    return bus_stops
-  end
+  #   end
+  #   return bus_stops
+  # end
 end
