@@ -12,6 +12,8 @@
       %p.alert= alert
       %ul
         - if user_signed_in?
+          %li= link_to 'browse dashboards', dashboards_path
+          %li= link_to 'create new dashboard', new_dashboard_path
           %li
             Logged in as
             %strong= current_user.email
