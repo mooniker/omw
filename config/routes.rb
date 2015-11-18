@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users
   get 'from/where' => 'locations#new'
+  get 'routes' => 'routes#index'
   # root 'welcome#index'
   root 'dashboards#index'
 

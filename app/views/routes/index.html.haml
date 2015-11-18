@@ -1,0 +1,11 @@
+%h2 Bus Routes
+%table
+  %thead
+    %tr
+      - @route_attributes.each do |attr|
+        %th= attr
+  %tbody
+    - @routes.each do |r|
+      %tr
+        - @route_attributes.each do |attr|
+          %td= r[attr]

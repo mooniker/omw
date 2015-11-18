@@ -187,6 +187,7 @@ DEPENDENCIES
   httparty
   jbuilder (~> 2.0)
   jquery-rails
+  json
   pg
   rails (= 4.2.4)
   rails_12factor
