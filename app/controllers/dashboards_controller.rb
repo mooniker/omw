@@ -22,18 +22,18 @@ class DashboardsController < ApplicationController
   end
 
   def create
-    @dashboard = Dashboard.new(dashboard_params)
+    dashboard = Dashboard.new(dashboard_params.merge(user: current_user))
     puts params, dashboard_params
-    if @dashboard.save
-      redirect_to @dashboard
+    if dashboard.save
+      redirect_to dashboard
     else
       render 'new'
     end
   end
 
   def update
-    @dashboard = Dashboard.find(params[:id])
-    if @dashboard.update(dashboard_params)
+    dashboard = Dashboard.find(params[:id])
+    if dashboard.update(dashboard_params)
       redirect_to dashboards_path
     else
       render 'edit'
