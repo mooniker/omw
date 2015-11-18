@@ -2,6 +2,13 @@
 %p Where are you?
 %div{ onclick: "geoFindMe()"} Click Me
 #out
+.map_container
+  #map
+  :javascript
+    L.mapbox.accessToken = 'pk.eyJ1IjoibW9vbmlrZXIiLCJhIjoiY2loNHkwMmUwMHp1Znc5bTVxZGptZ3d1eSJ9.IjtdkC-4egUXjw39mKShgA';
+    var map = L.mapbox.map('map', 'mapbox.pirates')
+        .setView([38.9048, -77.03387], 15);
+    L.control.fullscreen().addTo(map);
 = form_for(@location, method: 'post') do |f|
   .board_form
     = f.text_field :lat

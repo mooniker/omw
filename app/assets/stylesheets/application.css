@@ -27,3 +27,17 @@ header li {
   border: black 1px solid;
   margin: 2em;
 }
+
+.map_container {
+  /*width: 300px;
+  height: 200px;
+  postion: relative;*/
+}
+#map {
+  /*position:absolute;*/
+  /*top:0;
+  bottom:0;*/
+  /*width:100%;*/
+  width: 300px;
+  height: 300px;
+}
