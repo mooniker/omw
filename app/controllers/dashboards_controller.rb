@@ -1,7 +1,13 @@
 class DashboardsController < ApplicationController
 
   def index
-    @dashboards = Dashboard.all
+    @my_dashboards = []
+    if current_user
+      @my_dashboards = current_user.dashboards
+      @dashboard = Dashboard.where.not(user_id: current_user.id)
+    else
+      @dashboards = Dashboard.all
+    end
   end
 
   def show

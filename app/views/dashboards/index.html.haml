@@ -1,12 +1,26 @@
-%h2 Public Dashboards
-%table
-  %thead
-    %tr
-      %th Name
-      %th{colspan: 2}
-  %tbody
-    - @dashboards.each do |d|
+- if @my_dashboards
+  %h2 Your Dashboards
+  %table
+    %thead
       %tr
-        %td= link_to d.title, d
-        %td= link_to 'edit', edit_dashboard_path(d)
-        %td= link_to 'delete', dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' }
+        %th Name
+        %th{colspan: 2}
+    %tbody
+      - @my_dashboards.each do |d|
+        %tr
+          %td= link_to d.title, d
+          %td= link_to 'edit', edit_dashboard_path(d)
+          %td= link_to 'delete', dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' }
+- if @dashboards
+  %h2 All Dashboards
+  %table
+    %thead
+      %tr
+        %th Name
+        -# %th{colspan: 2}
+    %tbody
+      - @dashboards.each do |d|
+        %tr
+          %td= link_to d.title, d
+          -# %td= link_to 'edit', edit_dashboard_path(d)
+          -# %td= link_to 'delete', dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' }
