@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   get 'from/where' => 'locations#new'
-  root 'welcome#index'
+  # root 'welcome#index'
+  root 'dashboards#index'
 
   resources :locations
 

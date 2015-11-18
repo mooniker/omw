@@ -32,6 +32,12 @@ class DashboardsController < ApplicationController
   end
 
   def update
+    @dashboard = Dashboard.find(params[:id])
+    if @dashboard.update(dashboard_params)
+      redirect_to dashboards_path
+    else
+      render 'edit'
+    end
   end
 
   def destroy
