@@ -4,7 +4,7 @@ class DashboardsController < ApplicationController
     @my_dashboards = []
     if current_user
       @my_dashboards = current_user.dashboards
-      @dashboard = Dashboard.where.not(user_id: current_user.id)
+      @dashboards = Dashboard.where.not(user_id: current_user.id)
     else
       @dashboards = Dashboard.all
     end
