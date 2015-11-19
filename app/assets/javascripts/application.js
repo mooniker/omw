@@ -80,29 +80,6 @@ function dashboard_has( stop_id ) {
   return $('#dashboard_stop_id_str').val().search( stop_id ) >= 0;
 }
 
-// function make_bus_stop_geojson() {
-//   var data = $('.bus_stop_data');
-//   var geojson = {};
-//   geojson['type'] = 'FeatureCollection';
-//   geojson['features'] = [];
-//
-//   for ( var k in data ) {
-//     var newFeature = {
-//       "type": "Feature",
-//       "geometry": {
-//         "type": "Point",
-//         "coordinates": [ stop.eq(3).text(), stop.eq(2).text() ]
-//       },
-//       "properties": {
-//         "title": data[k].title,
-//         "description": data[k].desc
-//       }
-//     }
-//     geojson['features'].push(newFeature);
-//   }
-//   return geojson
-// }
-
 function get_bus_stop_geojson() {
   var geojson = {};
   geojson['type'] = 'FeatureCollection';
@@ -135,6 +112,7 @@ function get_bus_stop_geojson() {
 
 var map;
 var locations;
+var listings = document.getElementById('listings');
 
 function make_map (lat, lon) {
 
@@ -158,9 +136,39 @@ function make_map (lat, lon) {
   locations = L.mapbox.featureLayer().addTo(map);
   locations.setGeoJSON( get_bus_stop_geojson() );
 
-  locations.eachLayer( function(locale) {
-    // iterate over each marker
-  });
+  // locations.setGeoJSON(geojson);
+
+  // function setActive(el) {
+  //   var siblings = listings.getElementsByTagName('div');
+  //   for (var i = 0; i < siblings.length; i++) {
+  //     siblings[i].className = siblings[i].className
+  //     .replace(/active/, '').replace(/\s\s*$/, '');
+  //   }
+  //
+  //   el.className += ' active';
+  // }
+
+  // locations.eachLayer( function( locale ) {
+  //   // Shorten locale.feature.properties to just `prop` so we're not
+  //   // writing this long form over and over again.
+  //   var prop = locale.feature.properties;
+  //
+  //   // Each marker on the map.
+  //   var popup = '<h3>omw?</h3><div>' + prop.title;
+  //
+  //   var listing = listings.appendChild(document.createElement('div'));
+  //   listing.className = 'item';
+  //
+  //   var link = listing.appendChild(document.createElement('a'));
+  //   link.href = '#';
+  //   link.className = 'title';
+  //   link.innerHTML = prop.title;
+  //
+  //   link.onclick = function {
+  //     map.setView(locale.getLatLng(), 16);
+  //     locale.openPopup();
+  //   }
+  // });
 
   // // for each bus stop on dashboard, display it
   // var stops = [];
