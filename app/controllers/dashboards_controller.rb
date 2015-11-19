@@ -14,20 +14,28 @@ class DashboardsController < ApplicationController
     @dashboard = Dashboard.find(params[:id])
     stop_ids = @dashboard.stop_id_str.strip.split
     @predictions = []
+    @stops = []
     stop_ids.each do |stop|
       # @predictions << Wmata.new(ENV['wmata_api_key']).get_predictions(stop)
       @predictions << Wmata.new.get_predictions(stop)
-    end # why does this nest like this?
+      @stops << Stop.find_by('StopID': stop)
+    end
   end
 
   def new
     @dashboard = Dashboard.new
-    @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 400)
+    @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 500)
   end
 
   def edit
     @dashboard = Dashboard.find(params[:id])
-    @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 400)
+    stop_ids = @dashboard.stop_id_str.strip.split
+    # @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 400)
+    @stops = []
+    stop_ids.each do |stop|
+      # @predictions << Wmata.new.get_predictions(stop)
+      @stops << Stop.find_by('StopID': stop)
+    end
   end
 
   def create

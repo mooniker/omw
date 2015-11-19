@@ -1,0 +1,8 @@
+#stops_info.card.not_displayed
+  %ul
+    - @stops.each do |stop|
+      %li.bus_stop_data
+        %span.stop_name= stop['Name']
+        %span.stop_id= stop['StopID']
+        %span.stop_lat= stop['Lat']
+        %span.stop_lon= stop['Lon']

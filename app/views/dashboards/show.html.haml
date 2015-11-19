@@ -5,10 +5,10 @@
   %p#lon= @dashboard.lon
   %p= @dashboard.user_id
   %p= "Viewing Arrival Times for These Stop #s: #{@dashboard.stop_id_str}"
-  -# = @predictions.inspect
   = link_to 'edit', edit_dashboard_path(@dashboard)
   = link_to 'delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }
-.card= render 'map'
+= render 'stops_info'
+= render 'map'
 - @predictions.each do |stop|
   .bus_stop_card.card
     %h3= "#{stop['StopName']} (#{stop['StopID']})"
@@ -19,8 +19,8 @@
           %th RouteID
           %th DirectionText
           -# %th DirectionNum
-          %th VehicleID
-          %th TripID
+          -# %th VehicleID
+          -# %th TripID
       %tbody
         - stop['Predictions'].each do |p|
           %tr
@@ -28,5 +28,5 @@
             %td= p['RouteID']
             %td= p['DirectionText']
             -# %td= p['DirectionNum']
-            %td= p['VehicleID']
-            %td= p['TripID']
+            -# %td= p['VehicleID']
+            -# %td= p['TripID']

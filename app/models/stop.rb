@@ -13,4 +13,12 @@ class Stop < ActiveRecord::Base
     end
     return route_strings.join(', ')
   end
+  # 
+  # def get_lat
+  #   return self.lat
+  # end
+  #
+  # def get_lon
+  #   return self.lon
+  # end
 end

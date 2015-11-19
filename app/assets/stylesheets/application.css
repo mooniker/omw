@@ -47,3 +47,7 @@ header li {
   font-size: 200%;
   color: darkblue;
 }
+
+.not_displayed {
+  display: none;
+}

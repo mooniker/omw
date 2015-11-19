@@ -1,4 +1,6 @@
 %h2 Edit Dashboard?
+= render 'stops_info'
+= render 'map'
 = render 'form'
 = link_to 'delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }
 = link_to 'back', dashboards_path
