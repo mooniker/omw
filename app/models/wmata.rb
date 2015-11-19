@@ -3,8 +3,9 @@ class Wmata
   base_uri 'https://api.wmata.com'
   # attr_reader :last_updated
 
-  def initialize(api_key)
-    @options = { query: { api_key: api_key} }
+  def initialize #(api_key)
+    # @options = { query: { api_key: api_key} }
+    @options = { query: { api_key: ENV['wmata_api_key']} }
   end
 
   def get_bus_routes

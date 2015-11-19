@@ -1,3 +1,8 @@
+- if @stops
+  %h4 Nearby bus stops
+  %ul
+    - @stops.each do |stop|
+      %li= "Bus Stop: #{stop['Name']} (#{stop['StopID']})"
 = form_for @dashboard do |f|
   - if @dashboard.errors.any?
     #error_explanation

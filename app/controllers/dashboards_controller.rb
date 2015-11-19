@@ -15,21 +15,23 @@ class DashboardsController < ApplicationController
     stop_ids = @dashboard.stop_id_str.strip.split
     @predictions = []
     stop_ids.each do |stop|
-      @predictions << Wmata.new(ENV['wmata_api_key']).get_predictions(stop)
+      # @predictions << Wmata.new(ENV['wmata_api_key']).get_predictions(stop)
+      @predictions << Wmata.new.get_predictions(stop)
     end # why does this nest like this?
   end
 
   def new
     @dashboard = Dashboard.new
+    @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 400)
   end
 
   def edit
     @dashboard = Dashboard.find(params[:id])
+    @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 400)
   end
 
   def create
     dashboard = Dashboard.new(dashboard_params.merge(user: current_user))
-    puts params, dashboard_params
     if dashboard.save
       redirect_to dashboard
     else
