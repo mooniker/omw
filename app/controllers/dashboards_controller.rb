@@ -24,7 +24,7 @@ class DashboardsController < ApplicationController
 
   def new
     @dashboard = Dashboard.new
-    @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 500)
+    # @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 500)
   end
 
   def edit
@@ -50,7 +50,7 @@ class DashboardsController < ApplicationController
   def update
     dashboard = Dashboard.find(params[:id])
     if dashboard.update(dashboard_params)
-      redirect_to dashboards_path
+      redirect_to dashboard_path(dashboard)
     else
       render 'edit'
     end
