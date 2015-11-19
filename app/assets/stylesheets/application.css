@@ -14,9 +14,10 @@
  *= require_self
  */
 
-.bus_stop, .bus_stop_card {
+.card {
   display: inline-block;
   border: solid 1px darkgreen;
+  width: 24em;
 }
 
 header ul, header li {
@@ -38,6 +39,11 @@ header li {
   /*top:0;
   bottom:0;*/
   /*width:100%;*/
-  width: 300px;
+  /*width: 300px;*/
   height: 300px;
+}
+
+#output {
+  font-size: 200%;
+  color: darkblue;
 }

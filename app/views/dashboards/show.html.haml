@@ -1,12 +1,16 @@
-#dashboard_header
+#dashboard_header.card
   %h2= @dashboard.title
   %p= @dashboard.desc
+  %p#lat= @dashboard.lat
+  %p#lon= @dashboard.lon
+  %p= @dashboard.user_id
   %p= "Viewing Arrival Times for These Stop #s: #{@dashboard.stop_id_str}"
   -# = @predictions.inspect
   = link_to 'edit', edit_dashboard_path(@dashboard)
   = link_to 'delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }
+.card= render 'map'
 - @predictions.each do |stop|
-  .bus_stop_card
+  .bus_stop_card.card
     %h3= "#{stop['StopName']} (#{stop['StopID']})"
     %table
       %thead

@@ -44,3 +44,25 @@ function geoFindMe() {
 
   navigator.geolocation.getCurrentPosition(success, error);
 }
+
+// pk.eyJ1IjoibW9vbmlrZXIiLCJhIjoiY2loNHkwMmUwMHp1Znc5bTVxZGptZ3d1eSJ9.IjtdkC-4egUXjw39mKShgA
+
+// $(document).ready(function () {
+//
+//   if ( $('#lat') !== null && $('lon') !== null ) {
+//     var lat = parseFloat( $('#lat').text() );
+//     var lon = parseFloat( $('#lon').text() );
+//     L.mapbox.accessToken = 'pk.eyJ1IjoibW9vbmlrZXIiLCJhIjoiY2loNHkwMmUwMHp1Znc5bTVxZGptZ3d1eSJ9.IjtdkC-4egUXjw39mKShgA';
+//     var map = L.mapbox.map('map', 'mapbox.streets')
+//         .setView([lat, lon], 6);
+//
+//     // L.marker is a low-level marker constructor in Leaflet.
+//     L.marker([lat, lon], {
+//         icon: L.mapbox.marker.icon({
+//             'marker-size': 'large',
+//             'marker-symbol': 'bus',
+//             'marker-color': '#fa0'
+//         })
+//     }).addTo(map);
+//   }
+// });
