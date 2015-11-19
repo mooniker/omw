@@ -76,6 +76,46 @@ var token = 'pk.eyJ1IjoibW9vbmlrZXIiLCJhIjoiY2loNHkwMmUwMHp1Znc5bTVxZGptZ3d1eSJ9
 //   };
 // }
 
+function dashboard_has( stop_id ) {
+  return $('#dashboard_stop_id_str').val().search( stop_id ) >= 0;
+}
+
+function get_bus_stop_geojson() {
+  var stops = [];
+  $('.bus_stop_data').each( function (index, value) {
+    var stop = $(this).children();
+    var s = {};
+    s.type = 'Feature';
+    s.properties = {
+      title: stop.eq(0).text(),
+      amenity: 'bus stop',
+      'marker-symbol': 'bus',
+      'stop-id': stop.eq(1).text()
+    };
+    if ( dashboard_has( stop.eq(1).text() ) ) {
+      s.properties['marker-color'] = '#277227'; // green
+    } else {
+      s.properties['marker-color'] = '#000277'; // green
+    }
+    s.geometry = {
+      type: 'Point',
+      coordinates: [ stop.eq(3).text(), stop.eq(2).text() ]
+    };
+    // s.name = stop.eq(0).text();
+    // s.id = stop.eq(1).text();
+    // s.lat = stop.eq(2).text();
+    // s.lon = stop.eq(3).text();
+    stops.push(s);
+  });
+  return {
+    type: 'geojson',
+    data: {
+      type: 'FeatureCollection',
+      features: stops
+    }
+  };
+};
+
 var map;
 
 function make_map (lat, lon) {
@@ -83,13 +123,16 @@ function make_map (lat, lon) {
   L.mapbox.accessToken = token;
   map = L.mapbox.map('map', 'mapbox.pirates')
       .setView([lat, lon], default_zoom);
+  // map.touchZoom.disable();
+  map.scrollWheelZoom.disable();
+
 
   // L.marker is a low-level marker constructor in Leaflet.
   L.marker([lat, lon], {
       icon: L.mapbox.marker.icon({
           'marker-size': 'large',
           'marker-symbol': 'building',
-          'marker-color': '#fa0'
+          'marker-color': '#000277' //'#fa0'
       })
   }).addTo(map);
 
@@ -106,11 +149,18 @@ function make_map (lat, lon) {
   });
 
   stops.forEach ( function (stop) {
+    // var marker_size = 'small';
+    var marker_color = '#fa0';
+    // console.log(stop.id);
+    if ( dashboard_has(stop.id) ) {
+      // marker_size = 'large';
+      marker_color = '#277227'; // green
+    }
     L.marker([stop.lat, stop.lon], {
         icon: L.mapbox.marker.icon({
-            'marker-size': 'large',
+            'marker-size': 'medium', // marker_size,
             'marker-symbol': 'bus',
-            'marker-color': '#fa0'
+            'marker-color': marker_color //'#fa0'
         })
     }).addTo(map);
   });

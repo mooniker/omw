@@ -23,19 +23,24 @@ class DashboardsController < ApplicationController
   end
 
   def new
+    # @lat = 38.9049836
+    # @lon =  -77.0336719
     @dashboard = Dashboard.new
-    # @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 500)
+    @stops = Wmata.new.get_bus_stops(38.9049836, -77.0336719, 500)
+
+
   end
 
   def edit
     @dashboard = Dashboard.find(params[:id])
-    stop_ids = @dashboard.stop_id_str.strip.split
-    # @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 400)
-    @stops = []
-    stop_ids.each do |stop|
-      # @predictions << Wmata.new.get_predictions(stop)
-      @stops << Stop.find_by('StopID': stop)
-    end
+    # stop_ids = @dashboard.stop_id_str.strip.split
+    # # @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 400)
+    # @stops = []
+    # stop_ids.each do |stop|
+    #   # @predictions << Wmata.new.get_predictions(stop)
+    #   @stops << Stop.find_by('StopID': stop)
+    # end
+    @stops = Wmata.new.get_bus_stops(@dashboard.lat, @dashboard.lon, 500)
   end
 
   def create

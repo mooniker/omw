@@ -1,9 +1,10 @@
-#stops_info.card.not_displayed
+#stops_info.card
+  %h3 Bus Stop Info
   %ul
     - @stops.each do |stop|
       %li.bus_stop_data
         - if stop != nil
-          %span.stop_name= stop['Name']
+          %span.stop_name= stop['Name'] #.titleize
           %span.stop_id= stop['StopID']
           %span.stop_lat= stop['Lat']
           %span.stop_lon= stop['Lon']

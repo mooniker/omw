@@ -51,3 +51,13 @@ header li {
 .not_displayed {
   display: none;
 }
+
+.stop_id:before {
+  content: ' ('
+}
+.stop_id:after {
+  content: ')'
+}
+.stop_lat, .stop_lon {
+  display: none;
+}
