@@ -80,45 +80,64 @@ function dashboard_has( stop_id ) {
   return $('#dashboard_stop_id_str').val().search( stop_id ) >= 0;
 }
 
+// function make_bus_stop_geojson() {
+//   var data = $('.bus_stop_data');
+//   var geojson = {};
+//   geojson['type'] = 'FeatureCollection';
+//   geojson['features'] = [];
+//
+//   for ( var k in data ) {
+//     var newFeature = {
+//       "type": "Feature",
+//       "geometry": {
+//         "type": "Point",
+//         "coordinates": [ stop.eq(3).text(), stop.eq(2).text() ]
+//       },
+//       "properties": {
+//         "title": data[k].title,
+//         "description": data[k].desc
+//       }
+//     }
+//     geojson['features'].push(newFeature);
+//   }
+//   return geojson
+// }
+
 function get_bus_stop_geojson() {
-  var stops = [];
+  var geojson = {};
+  geojson['type'] = 'FeatureCollection';
+  geojson['features'] = [];
+
   $('.bus_stop_data').each( function (index, value) {
     var stop = $(this).children();
-    var s = {};
-    s.type = 'Feature';
-    s.properties = {
-      title: stop.eq(0).text(),
-      amenity: 'bus stop',
-      'marker-symbol': 'bus',
-      'stop-id': stop.eq(1).text()
+    var new_feature = {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [parseFloat( stop.eq(3).text() ), parseFloat( stop.eq(2).text() ) ]
+      },
+      "properties": {
+        "title": stop.eq(0).text(),
+        "amenity": "bus stop",
+        "description": stop.eq(1).text(),
+        "marker-symbol": "bus"
+      }
     };
     if ( dashboard_has( stop.eq(1).text() ) ) {
-      s.properties['marker-color'] = '#277227'; // green
+      new_feature.properties['marker-color'] = '#277227'; // green
     } else {
-      s.properties['marker-color'] = '#000277'; // green
+      new_feature.properties['marker-color'] = '#000277'; // green
     }
-    s.geometry = {
-      type: 'Point',
-      coordinates: [ stop.eq(3).text(), stop.eq(2).text() ]
-    };
-    // s.name = stop.eq(0).text();
-    // s.id = stop.eq(1).text();
-    // s.lat = stop.eq(2).text();
-    // s.lon = stop.eq(3).text();
-    stops.push(s);
+    geojson['features'].push(new_feature);
   });
-  return {
-    type: 'geojson',
-    data: {
-      type: 'FeatureCollection',
-      features: stops
-    }
-  };
+  return geojson;
 };
 
 var map;
+var locations;
 
 function make_map (lat, lon) {
+
   var default_zoom = 15;
   L.mapbox.accessToken = token;
   map = L.mapbox.map('map', 'mapbox.pirates')
@@ -136,34 +155,41 @@ function make_map (lat, lon) {
       })
   }).addTo(map);
 
-  // for each bus stop on dashboard, display it
-  var stops = [];
-  $('.bus_stop_data').each( function (index, value) {
-    var stop = $(this).children();
-    var s = {};
-    s.name = stop.eq(0).text();
-    s.id = stop.eq(1).text();
-    s.lat = stop.eq(2).text();
-    s.lon = stop.eq(3).text();
-    stops.push(s);
+  locations = L.mapbox.featureLayer().addTo(map);
+  locations.setGeoJSON( get_bus_stop_geojson() );
+
+  locations.eachLayer( function(locale) {
+    // iterate over each marker
   });
 
-  stops.forEach ( function (stop) {
-    // var marker_size = 'small';
-    var marker_color = '#fa0';
-    // console.log(stop.id);
-    if ( dashboard_has(stop.id) ) {
-      // marker_size = 'large';
-      marker_color = '#277227'; // green
-    }
-    L.marker([stop.lat, stop.lon], {
-        icon: L.mapbox.marker.icon({
-            'marker-size': 'medium', // marker_size,
-            'marker-symbol': 'bus',
-            'marker-color': marker_color //'#fa0'
-        })
-    }).addTo(map);
-  });
+  // // for each bus stop on dashboard, display it
+  // var stops = [];
+  // $('.bus_stop_data').each( function (index, value) {
+  //   var stop = $(this).children();
+  //   var s = {};
+  //   s.name = stop.eq(0).text();
+  //   s.id = stop.eq(1).text();
+  //   s.lat = stop.eq(2).text();
+  //   s.lon = stop.eq(3).text();
+  //   stops.push(s);
+  // });
+  //
+  // stops.forEach ( function (stop) {
+  //   // var marker_size = 'small';
+  //   var marker_color = '#fa0';
+  //   // console.log(stop.id);
+  //   if ( dashboard_has(stop.id) ) {
+  //     // marker_size = 'large';
+  //     marker_color = '#277227'; // green
+  //   }
+  //   L.marker([stop.lat, stop.lon], {
+  //       icon: L.mapbox.marker.icon({
+  //           'marker-size': 'medium', // marker_size,
+  //           'marker-symbol': 'bus',
+  //           'marker-color': marker_color //'#fa0'
+  //       })
+  //   }).addTo(map);
+  // });
 }
 
 $( document ).ready(function() {
