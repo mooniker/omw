@@ -48,6 +48,8 @@
 // defaults
 var latitude = 38.8898; // U.S. Capitol
 var longitude = -77.0091;
+var added_color = '#277227';
+var not_added_color = '#000277';
 
 // constants
 var token = 'pk.eyJ1IjoibW9vbmlrZXIiLCJhIjoiY2loNHkwMmUwMHp1Znc5bTVxZGptZ3d1eSJ9.IjtdkC-4egUXjw39mKShgA';
@@ -101,18 +103,19 @@ function get_bus_stop_geojson() {
       }
     };
     if ( dashboard_has( stop.eq(1).text() ) ) {
-      new_feature.properties['marker-color'] = '#277227'; // green
+      new_feature.properties['marker-color'] = added_color; // green
     } else {
-      new_feature.properties['marker-color'] = '#000277'; // green
+      new_feature.properties['marker-color'] = not_added_color; // green
     }
     geojson['features'].push(new_feature);
   });
   return geojson;
 };
 
+var bus_stop_json;
 var map;
 var locations;
-var listings = document.getElementById('listings');
+var listings;
 
 function make_map (lat, lon) {
 
@@ -122,21 +125,20 @@ function make_map (lat, lon) {
       .setView([lat, lon], default_zoom);
   // map.touchZoom.disable();
   map.scrollWheelZoom.disable();
-
+  listings = document.getElementById('listings');
 
   // L.marker is a low-level marker constructor in Leaflet.
   L.marker([lat, lon], {
       icon: L.mapbox.marker.icon({
           'marker-size': 'large',
           'marker-symbol': 'building',
-          'marker-color': '#000277' //'#fa0'
+          'marker-color': added_color //'#fa0'
       })
   }).addTo(map);
 
   locations = L.mapbox.featureLayer().addTo(map);
-  locations.setGeoJSON( get_bus_stop_geojson() );
+  locations.setGeoJSON( bus_stop_json );
 
-  // locations.setGeoJSON(geojson);
 
   // function setActive(el) {
   //   var siblings = listings.getElementsByTagName('div');
@@ -148,27 +150,62 @@ function make_map (lat, lon) {
   //   el.className += ' active';
   // }
 
-  // locations.eachLayer( function( locale ) {
-  //   // Shorten locale.feature.properties to just `prop` so we're not
-  //   // writing this long form over and over again.
-  //   var prop = locale.feature.properties;
-  //
-  //   // Each marker on the map.
-  //   var popup = '<h3>omw?</h3><div>' + prop.title;
-  //
-  //   var listing = listings.appendChild(document.createElement('div'));
-  //   listing.className = 'item';
-  //
-  //   var link = listing.appendChild(document.createElement('a'));
-  //   link.href = '#';
-  //   link.className = 'title';
-  //   link.innerHTML = prop.title;
-  //
-  //   link.onclick = function {
-  //     map.setView(locale.getLatLng(), 16);
-  //     locale.openPopup();
-  //   }
-  // });
+  locations.eachLayer( function( locale ) {
+    // Shorten locale.feature.properties to just `prop` so we're not
+    // writing this long form over and over again.
+    var prop = locale.feature.properties;
+
+    // Each marker on the map.
+    // var popup = '<h3>' + prop.title + '</h3><div>' + prop.description + " <a href='#'>Add</a>";
+
+    var listing = listings.appendChild(document.createElement('div'));
+    listing.className = 'item';
+
+    var link = listing.appendChild(document.createElement('a'));
+    link.href = '#';
+    link.className = 'title';
+
+    link.innerHTML = prop.title;
+
+    var details = listing.appendChild( document.createElement('div') );
+    details.innerHTML += 'Bus Stop #' + prop.description + " <a href='#'>Add</a>";
+
+    // link.onclick = function() {
+    //   setActive( listing );
+    //
+    //   // When a menu item is clicked, animate the map to center
+    //   // its associated locale and open its popup.
+    //   map.setView(locale.getLatLng(), 16);
+    //   locale.openPopup();
+    //   return false;
+    // };
+
+    // Marker interaction
+    // locale.on('click', function(e) {
+    //   // 1. center the map on the selected marker.
+    //   map.panTo(locale.getLatLng());
+    //
+    //   // 2. Set active the markers associated listing.
+    //   setActive(listing);
+    //
+    // });
+
+    // popup += '</div>';
+    // locale.bindPopup(popup);
+  });
+
+  locations.on('click', function(e) {
+    // set up color toggle
+    // e.layer.feature.properties['old-color'] = e.layer.feature.properties['marker-color'];
+    if ( e.layer.feature.properties['marker-color'] == added_color ) {
+      e.layer.feature.properties['marker-color'] = not_added_color;
+    } else {
+      e.layer.feature.properties['marker-color'] = added_color;
+    }
+    toggle_stop( e.layer.feature.properties['description'] );
+    locations.setGeoJSON( bus_stop_json );
+  });
+
 
   // // for each bus stop on dashboard, display it
   // var stops = [];
@@ -200,7 +237,23 @@ function make_map (lat, lon) {
   // });
 }
 
+function toggle_stop( bus_stop_id ) {
+  var bus_stop_ids = $('#dashboard_stop_id_str').val().split(' ');
+  if ( dashboard_has( bus_stop_id ) ) {
+    // remove the bus id from the form
+    var del_index = bus_stop_ids.indexOf( bus_stop_id );
+    if ( del_index > -1 ) {
+      bus_stop_ids.splice(del_index, 1);
+    }
+  } else {
+    // add the bus_stop_id
+    bus_stop_ids.push ( bus_stop_id );
+  }
+  $('#dashboard_stop_id_str').val( bus_stop_ids.join(' ') );
+}
+
 $( document ).ready(function() {
+  bus_stop_json = get_bus_stop_geojson();
 
   if ( $('#lat').length !== 0 && $('#lon').length !== 0 ) {
     make_map( parseFloat( $('#lat').text() ), parseFloat( $('#lon').text() ) );
