@@ -61,3 +61,15 @@ header li {
 .stop_lat, .stop_lon {
   display: none;
 }
+
+#dashboard_header {
+  width: 100%;
+}
+
+#dashboard_header p, #dashboard_header h2 {
+  display: inline;
+}
+
+#lat, #lon {
+  display: none;
+}

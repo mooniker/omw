@@ -168,7 +168,7 @@ function make_map (lat, lon) {
     link.innerHTML = prop.title;
 
     var details = listing.appendChild( document.createElement('div') );
-    details.innerHTML += 'Bus Stop #' + prop.description + " <a href='#'>Add</a>";
+    details.innerHTML += 'Bus Stop #' + prop.description;
 
     // link.onclick = function() {
     //   setActive( listing );
