@@ -46,20 +46,24 @@
 // }
 
 // defaults
-var latitude = 38.8898; // U.S. Capitol
-var longitude = -77.0091;
+var latitude = 38.889; // U.S. Capitol
+var longitude = -77.009;
 var added_color = '#277227';
 var not_added_color = '#000277';
 
 // constants
 var token = 'pk.eyJ1IjoibW9vbmlrZXIiLCJhIjoiY2loNHkwMmUwMHp1Znc5bTVxZGptZ3d1eSJ9.IjtdkC-4egUXjw39mKShgA';
 // var address_query = "https://api.mapbox.com/geocoding/v5/{dataset}/{query}.json?proximity={longitude},{latitude}&access_token={token}";
-//
-// function make_address_query_url( query ) {
-// // "https://api.mapbox.com/geocoding/v5/{dataset}/{query}.json?proximity={longitude},{latitude}&access_token={token}";
-//   var prefix = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
-//   return prefix + query + ".json?proximity=" + longitude + "," + latitude + "&access_token=" + token;
-// }
+
+function make_address_query_url( query ) {
+// "https://api.mapbox.com/geocoding/v5/{dataset}/{query}.json?proximity={longitude},{latitude}&access_token={token}";
+  var prefix = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
+  // https://api.mapbox.com/geocoding/v5/{dataset}/{query}.json?access_token=<your access token>
+  // var url = prefix + query + ".json?proximity=" + longitude + "," + latitude + "&access_token=" + token;
+  var url = prefix + query + ".json?access_token=" + token;
+  console.log( url );
+  return url;
+}
 
 // function set_lon_lat_from_address() {
 //
@@ -77,6 +81,27 @@ var token = 'pk.eyJ1IjoibW9vbmlrZXIiLCJhIjoiY2loNHkwMmUwMHp1Znc5bTVxZGptZ3d1eSJ9
 //     jsonhttp.send();
 //   };
 // }
+
+function httpGetAsync( url, callback ) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if ( xmlHttp.readyState == 4 && xmlHttp.status == 200 )
+            callback(xmlHttp.responseText);
+    };
+    xmlHttp.open( "GET", url, true ); // true for asynchronous
+    xmlHttp.send( null );
+}
+
+function updateLatLon ( jsonResponse ) {
+  console.log( 'Trying to update latlon:', jsonResponse.features[0].center[1], jsonResponse.features[0].center[0]);
+  latitude = parseFloat(jsonResponse.features[0].center[1]);
+  longitude = parseFloat(jsonResponse.features[0].center[0]);
+  // point map at new location
+
+  // auto fill lat lon form elements
+  $('#dashboard_lat').val( latitude );
+  $('#dashboard_lon').val( longitude );
+}
 
 function dashboard_has( stop_id ) {
   return $('#dashboard_stop_id_str').val().search( stop_id ) >= 0;
@@ -257,7 +282,10 @@ $( document ).ready(function() {
 
   if ( $('#lat').length !== 0 && $('#lon').length !== 0 ) {
     make_map( parseFloat( $('#lat').text() ), parseFloat( $('#lon').text() ) );
-  } else if ( $('#dashboard_lat').val().length > 0 && $('#dashboard_lon').val().length > 0 ) {
+  } else if ( $('#dashboard_lat').length !== 0 &&
+              $('#dashboard_lon').length !== 0 &&
+              $('#dashboard_lat').val().length > 0 &&
+              $('#dashboard_lon').val().length > 0 ) {
     var lat = parseFloat( $('#dashboard_lat').val() );
     var lon =  parseFloat( $('#dashboard_lon').val() );
     make_map( lat, lon );
@@ -266,4 +294,11 @@ $( document ).ready(function() {
     make_map( latitude, longitude );
     console.log( "Map by default set to", latitude, longitude );
   }
+
+  $('label').eq(1).on( 'click', function() {
+    console.log('Clicked.');
+    var query = $('input').eq(3).val();
+    var replaced = query.split(' ').join('+');
+    httpGetAsync( make_address_query_url( replaced ), updateLatLon );
+  } );
 });
