@@ -14,20 +14,19 @@
  *= require_self
  */
 
-.card {
+/*.card {
   display: inline-block;
   border: solid 1px darkgreen;
   width: 24em;
-}
+}*/
 
-header ul, header li {
+/*header ul, header li {
   list-style: none;
   display: inline;
 }
 header li {
-  border: black 1px solid;
   margin: 2em;
-}
+}*/
 
 .map_container {
   /*width: 300px;
@@ -40,13 +39,15 @@ header li {
   bottom:0;*/
   /*width:100%;*/
   /*width: 300px;*/
-  height: 300px;
+  /*height: 300px;*/
+  width: 500px;
+  height: 400px;
 }
 
-#output {
+/*#output {
   font-size: 200%;
   color: darkblue;
-}
+}*/
 
 .not_displayed {
   display: none;
@@ -62,13 +63,13 @@ header li {
   display: none;
 }
 
-#dashboard_header {
+/*#dashboard_header {
   width: 100%;
-}
+}*/
 
-#dashboard_header p, #dashboard_header h2 {
+/*#dashboard_header p, #dashboard_header h2 {
   display: inline;
-}
+}*/
 
 #lat, #lon {
   display: none;

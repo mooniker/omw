@@ -9,8 +9,12 @@
       - @my_dashboards.each do |d|
         %tr
           %td= link_to d.title, d
-          %td= link_to 'edit', edit_dashboard_path(d)
-          %td= link_to 'delete', dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' }
+          %td
+            =link_to edit_dashboard_path(d) do
+              %i.material-icons.small edit
+          %td
+            = link_to dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' } do
+              %i.material-icons.small delete
 - if @dashboards
   %h2 Everyone's Dashboards
   %table

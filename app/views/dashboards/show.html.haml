@@ -1,36 +1,36 @@
 #dashboard_header
   %h2= @dashboard.title
   %p= @dashboard.desc
-  %p#lat.not_displayed= @dashboard.lat
-  %p#lon.not_displayed= @dashboard.lon
+  %p#lat.not_displayed.hide= @dashboard.lat
+  %p#lon.not_displayed.hide= @dashboard.lon
   -# %p= @dashboard.user_id
   -# %p= "Viewing Arrival Times for These Stop #s: #{@dashboard.stop_id_str}"
   - if @dashboard.user_id == current_user.id
-    %p= link_to 'edit', edit_dashboard_path(@dashboard)
-    %p= link_to 'delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }
+    %i.material-icons.small= link_to 'edit', edit_dashboard_path(@dashboard)
+    %i.material-icons.small= link_to 'delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }
 = render 'stops_info'
 -# = render 'map'
 - @predictions.each do |stop|
-  .bus_stop_card.card
-    %h3= "#{stop['StopName']}"
+  .bus_stop_card.card.hoverable.container
+    %h3.center-align= "#{stop['StopName']}"
     - if stop['Predictions'].length == 0
-      %h4 No predictions
+      %h4.center-align No predictions
     - else
-      %table
+      %table.striped
         %thead
           %tr
-            %th Minutes
-            %th RouteID
-            %th DirectionText
+            %th.center-align Minutes
+            %th.center-align RouteID
+            %th.center-align DirectionText
             -# %th DirectionNum
             -# %th VehicleID
             -# %th TripID
         %tbody
           - stop['Predictions'].each do |p|
             %tr
-              %td= p['Minutes']
-              %td= p['RouteID']
-              %td= p['DirectionText']
+              %td.center-align= p['Minutes']
+              %td.center-align= p['RouteID']
+              %td.center-align= p['DirectionText']
               -# %td= p['DirectionNum']
               -# %td= p['VehicleID']
               -# %td= p['TripID']

@@ -1,24 +1,44 @@
-= form_for @dashboard do |f|
-  - if @dashboard.errors.any?
-    #error_explanation
-      %h3
-        = pluralize(@dashboard.errors.count, "error")
-        prohibited this dashboard from being saved:
-      %ul
-        - @dashboard.errors.full_messages.each do |msg|
-          %li= msg
-  = f.label :title
-  = f.text_field :title, :placeholder => 'e.g. Acme Corp. HQ'
-  = f.label :address
-  = f.text_field :address, :placeholder => 'e.g. 1600 Penn. Ave NW'
-  = f.label :desc
-  = f.text_field :desc, :placeholder => 'e.g. some motto'
-  = f.label :public
-  = f.check_box :public
-  = f.label :lat
-  = f.text_field :lat, class: 'lat'
-  = f.label :lon
-  = f.text_field :lon, class: 'lon'
-  -# = f.label :stop_id_str
-  = f.text_field :stop_id_str, class: 'not_displayed'
-  = f.submit
+.form
+  .row
+    = form_for @dashboard, :html => {:class => "col s12"} do |f|
+      .row
+        - if @dashboard.errors.any?
+          #error_explanation
+            %h3
+              = pluralize(@dashboard.errors.count, "error")
+              prohibited this dashboard from being saved:
+            %ul
+              - @dashboard.errors.full_messages.each do |msg|
+                %li= msg
+      .row
+        .input-field.col.s12
+          %i.material-icons.prefix mode_edit
+          = f.label :title, 'title of dashboard'
+          = f.text_field :title, :placeholder => 'e.g. Acme Corp. HQ'
+      .row
+        .input-field.col.s12
+          %i.material-icons.prefix mode_edit
+          = f.label :address
+          = f.text_field :address, :placeholder => 'e.g. 1600 Penn. Ave NW'
+      .row
+        .input-field.col.s12
+          %i.material-icons.prefix mode_edit
+          = f.label :desc
+          = f.text_field :desc #, :placeholder => 'e.g. some motto'
+      .row
+        = f.check_box :public #, :class => 'filled-in'
+        = f.label :public, 'make public'
+      .row
+        .input-field.col.s12
+          = f.label :lat, 'latitude'
+          = f.text_field :lat #, class: 'lat'
+      .row
+        .input-field.col.s12
+          = f.label :lon, 'longitude'
+          = f.text_field :lon #, class: 'lon'
+      .row.hide
+        .input-field.col.s12.hide
+          = f.label :stop_id_str
+          = f.text_field :stop_id_str
+      .row
+        = f.submit nil, :class => 'btn waves-effect waves-light'

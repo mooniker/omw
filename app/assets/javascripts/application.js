@@ -175,25 +175,25 @@ function make_map (lat, lon) {
   //   el.className += ' active';
   // }
 
-  locations.eachLayer( function( locale ) {
+  // locations.eachLayer( function( locale ) {
     // Shorten locale.feature.properties to just `prop` so we're not
     // writing this long form over and over again.
-    var prop = locale.feature.properties;
+    // var prop = locale.feature.properties;
 
     // Each marker on the map.
     // var popup = '<h3>' + prop.title + '</h3><div>' + prop.description + " <a href='#'>Add</a>";
 
-    var listing = listings.appendChild(document.createElement('div'));
-    listing.className = 'item';
-
-    var link = listing.appendChild(document.createElement('a'));
-    link.href = '#';
-    link.className = 'title';
-
-    link.innerHTML = prop.title;
-
-    var details = listing.appendChild( document.createElement('div') );
-    details.innerHTML += 'Bus Stop #' + prop.description;
+    // var listing = listings.appendChild(document.createElement('div'));
+    // listing.className = 'item';
+    //
+    // var link = listing.appendChild(document.createElement('a'));
+    // link.href = '#';
+    // link.className = 'title';
+    //
+    // link.innerHTML = prop.title;
+    //
+    // var details = listing.appendChild( document.createElement('div') );
+    // details.innerHTML += 'Bus Stop #' + prop.description;
 
     // link.onclick = function() {
     //   setActive( listing );
@@ -217,7 +217,7 @@ function make_map (lat, lon) {
 
     // popup += '</div>';
     // locale.bindPopup(popup);
-  });
+  // });
 
   locations.on('click', function(e) {
     // set up color toggle
@@ -301,4 +301,7 @@ $( document ).ready(function() {
     var replaced = query.split(' ').join('+');
     httpGetAsync( make_address_query_url( replaced ), updateLatLon );
   } );
+
+  // $('select').material_select(); //
+
 });

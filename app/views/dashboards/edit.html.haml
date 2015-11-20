@@ -1,6 +1,6 @@
 %h2 Edit Dashboard?
-= render 'form'
 = render 'stops_info'
 = render 'map'
-= link_to 'delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }
-= link_to 'back', dashboards_path
+= render 'form'
+= link_to 'Delete', dashboard_path(@dashboard), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn waves-effect waves-light'
+= link_to 'Cancel', dashboards_path, :class => 'btn waves-effect waves-light'
