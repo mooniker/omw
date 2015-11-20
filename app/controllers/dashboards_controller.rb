@@ -19,7 +19,7 @@ class DashboardsController < ApplicationController
     stop_ids.each do |stop|
       # @predictions << Wmata.new(ENV['wmata_api_key']).get_predictions(stop)
       @predictions << Wmata.new.get_predictions(stop)
-      @stops << Stop.find_by('StopID': stop)
+      @stops << Stop.find_by('StopID' => stop)
     end
   end
 
