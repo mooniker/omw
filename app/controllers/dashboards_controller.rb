@@ -4,9 +4,10 @@ class DashboardsController < ApplicationController
     @my_dashboards = []
     if current_user
       @my_dashboards = current_user.dashboards
-      @dashboards = Dashboard.where.not(user_id: current_user.id)
+      not_mine = Dashboard.where.not(user_id: current_user.id)
+      @dashboards = not_mine.where(public: true)
     else
-      @dashboards = Dashboard.all
+      @dashboards = Dashboard.where(public: true)
     end
   end
 
