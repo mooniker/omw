@@ -15,41 +15,43 @@
 //= require turbolinks
 //= require_tree .
 
-
-// function geoFindMe() {
-//   var output = document.getElementById("out");
-//
-//   if (!navigator.geolocation){
-//     output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-//     return;
-//   }
-//
-//   function success(position) {
-//     var latitude  = position.coords.latitude;
-//     var longitude = position.coords.longitude;
-//
-//     output.innerHTML = '<p>Latitude is ' + latitude + '° <br>Longitude is ' + longitude + '°</p>';
-//
-//     var img = new Image();
-//     img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
-//
-//     output.appendChild(img);
-//   };
-//
-//   function error() {
-//     output.innerHTML = "Unable to retrieve your location";
-//   };
-//
-//   output.innerHTML = "<p>Locating…</p>";
-//
-//   navigator.geolocation.getCurrentPosition(success, error);
-// }
-
 // defaults
 var latitude = 38.889; // U.S. Capitol
 var longitude = -77.009;
 var added_color = '#277227';
 var not_added_color = '#000277';
+
+
+function geoFindMe() {
+  var alert = document.getElementById("alert");
+  var notice = document.getElementById("notice");
+
+  if ( !navigator.geolocation ) {
+    alert.innerHTML = "Geolocation is not supported by your browser";
+    return;
+  }
+
+  function success(position) {
+    latitude  = position.coords.latitude;
+    longitude = position.coords.longitude;
+
+    notice.innerHTML = 'Your latitude and longitude are ' + latitude + '° ' + longitude + '°';
+
+    // var img = new Image();
+    // img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+
+    //alert.appendChild(img);
+  };
+
+  function error() {
+    notice.innerHTML = "";
+    alert.innerHTML = "Unable to retrieve your location";
+  };
+
+  notice.innerHTML = "Attempting to triangulate your position...";
+
+  navigator.geolocation.getCurrentPosition(success, error);
+}
 
 // constants
 var token = 'pk.eyJ1IjoibW9vbmlrZXIiLCJhIjoiY2loNHkwMmUwMHp1Znc5bTVxZGptZ3d1eSJ9.IjtdkC-4egUXjw39mKShgA';
