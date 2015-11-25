@@ -30,7 +30,7 @@ function geoFindMe() {
     alert.innerHTML = "Geolocation is not supported by your browser";
     return;
   }
-
+// this feels weird defining a function inside of another
   function success(position) {
     latitude  = position.coords.latitude;
     longitude = position.coords.longitude;
@@ -53,6 +53,7 @@ function geoFindMe() {
   navigator.geolocation.getCurrentPosition(success, error);
 }
 
+// i feel like alot of people expose there mapbox keys, i don't know that its generally accepted practice, but the work around is making the server do the calls for you. I'm not sure how that integrates with mapping though
 // constants
 var token = 'pk.eyJ1IjoibW9vbmlrZXIiLCJhIjoiY2loNHkwMmUwMHp1Znc5bTVxZGptZ3d1eSJ9.IjtdkC-4egUXjw39mKShgA';
 // var address_query = "https://api.mapbox.com/geocoding/v5/{dataset}/{query}.json?proximity={longitude},{latitude}&access_token={token}";
@@ -84,6 +85,7 @@ function make_address_query_url( query ) {
 //   };
 // }
 
+// very cool stuff, i was always really scared about using vanilla JS to do asynchronous calls to an API
 function httpGetAsync( url, callback ) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
@@ -166,7 +168,7 @@ function make_map (lat, lon) {
   locations = L.mapbox.featureLayer().addTo(map);
   locations.setGeoJSON( bus_stop_json );
 
-
+// remember to remove any unused code when pushing to production. It's small but something employers may notice.
   // function setActive(el) {
   //   var siblings = listings.getElementsByTagName('div');
   //   for (var i = 0; i < siblings.length; i++) {
@@ -278,7 +280,8 @@ function toggle_stop( bus_stop_id ) {
   }
   $('#dashboard_stop_id_str').val( bus_stop_ids.join(' ') );
 }
-
+// Seems like theres a large section of function definitions and then about 20 or so lines of execution.
+// The code below is in the right place, but I imagine the rest of your function definitions can live in different files for better maintainability
 $( document ).ready(function() {
   bus_stop_json = get_bus_stop_geojson();
 
@@ -296,7 +299,7 @@ $( document ).ready(function() {
     make_map( latitude, longitude );
     console.log( "Map by default set to", latitude, longitude );
   }
-
+// this is super cool way of updating your model on the server side leveraging javascript in this way.
   $('label').eq(1).on( 'click', function() {
     console.log('Clicked.');
     var query = $('input').eq(3).val();

@@ -1,3 +1,5 @@
+# first of all kudos, but this is the kind of class that warrants a shit ton of
+# comments. Lotsa cool stuff going on here as to what these different methods do
 class Wmata
   include HTTParty
   base_uri 'https://api.wmata.com'
@@ -25,6 +27,11 @@ class Wmata
     JSON.parse(response.body)['Stops']
   end
 
+# how does this method definition differ from the one defined below it? I can see that
+# you drill further into the body. I guess my biggest hangup is the naming of these two methods.
+# providing an x in the second method doesn't provide any more semantic meaning
+# If I'm another dev looking at this code, wouldn't really know what get_predictions does
+# if get_predictions_x is drilling into a key of Predictions
   def get_predictions(stop_id)
     uri_with_params = "https://api.wmata.com/NextBusService.svc/json/jPredictions?StopID=#{stop_id}"
     response = self.class.get(uri_with_params, @options)
