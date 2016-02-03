@@ -304,6 +304,7 @@ $( document ).ready(function() {
     httpGetAsync( make_address_query_url( replaced ), updateLatLon );
   } );
 
-  // $('select').material_select(); //
+  // Materlaize CSS initialization for forms
+  $('select').material_select();
 
 });

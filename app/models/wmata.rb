@@ -37,7 +37,7 @@ class Wmata
     JSON.parse(response.body)['Predictions']
   end
 
-  # def get_departure_times_for_nearby_bus_stops(lat, lon, radius)
+  # def get_departure_times_for_ne3arby_bus_stops(lat, lon, radius)
   #   bus_stops = self.get_bus_stops(lat, lon, radius)
   #   bus_stops.each do |stop|
   #     s = stop['StopID']
