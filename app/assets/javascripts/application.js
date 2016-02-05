@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require materialize-sprockets
 
 // defaults
 var latitude = 38.889; // U.S. Capitol
@@ -305,6 +306,8 @@ $( document ).ready(function() {
   } );
 
   // Materlaize CSS initialization for forms
-  $('select').material_select();
+  // $('select').material_select();
+  //
+  // $(".dropdown-button").dropdown();
 
 });

@@ -1,20 +1,23 @@
 - if @my_dashboards
   %h2 Your Dashboards
-  %table
-    %thead
-      %tr
-        %th Name
-        %th{colspan: 2}
-    %tbody
-      - @my_dashboards.each do |d|
+  - if @my_dashboards.length != 0
+    %table
+      %thead
         %tr
-          %td= link_to d.title, d
-          %td
-            =link_to edit_dashboard_path(d) do
-              %i.material-icons.small edit
-          %td
-            = link_to dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' } do
-              %i.material-icons.small delete
+          %th Name
+          %th{colspan: 2}
+      %tbody
+        - @my_dashboards.each do |d|
+          %tr
+            %td= link_to d.title, d
+            %td
+              =link_to edit_dashboard_path(d) do
+                %i.material-icons.small edit
+            %td
+              = link_to dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' } do
+                %i.material-icons.small delete
+  - else
+    %p You don't have any dashboards yet.
 - if @dashboards
   %h2 Everyone's Dashboards
   %table

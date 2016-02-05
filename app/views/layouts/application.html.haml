@@ -2,7 +2,7 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Omw
+    %title OMW (wmata bus arrival/departure dashboards)
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
@@ -12,30 +12,37 @@
     %link{:href => "https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css", :rel => "stylesheet"}/
     %link{:href => "https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css", :rel => "stylesheet"}
     / Compiled and minified CSS
-    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css", :rel => "stylesheet"}/
-    / Compiled and minified JavaScript
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"}
+    -# %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css", :rel => "stylesheet"}/
+    -# / Compiled and minified JavaScript
+    -# %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"}
     / Import Google Icon Font
     %link{:href => "http://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
   %body
-    %header
-      #output
-      %p#notice.notice= notice
-      %p#alert.alert= alert
-      %nav.indigo.darken-4
-        .nav-wrapper
-          %span.brand-logo omw from
-          %ul#nav-mobile.right.hide-on-medium-and-down
-            - if user_signed_in?
-              %li
-                Logged in as
-                %strong= current_user.email
-              %li= link_to 'browse dashboards', dashboards_path
-              %li= link_to 'create new dashboard', new_dashboard_path
-              %li= link_to 'settings', edit_user_registration_path
-              %li= link_to 'logout', destroy_user_session_path, method: :delete
-            - else
-              %li= link_to 'sign up', new_user_registration_path
-              %li= link_to 'login', new_user_session_path
-  .main.container
-    = yield
+    .container
+      %header
+        #output
+        %p#notice.notice= notice
+        %p#alert.alert= alert
+        %ul#account-dropdown.dropdown-content
+          - if user_signed_in?
+            %li= link_to 'settings', edit_user_registration_path
+            %li= link_to 'log out', destroy_user_session_path, method: :delete
+          - else
+            %li= link_to 'sign up', new_user_registration_path
+            %li= link_to 'log in', new_user_session_path
+        %ul#dash-dropdown.dropdown-content
+          %li= link_to 'browse dashboards', dashboards_path
+          - if user_signed_in?
+            %li= link_to 'create new dashboard', new_dashboard_path
+        %nav.indigo.darken-4
+          .nav-wrapper
+            %span.brand-logo= link_to 'omw', root_path
+            %ul#nav-mobile.right.hide-on-medium-and-down
+              - if user_signed_in?
+                -# dropdown triggers
+                %li
+                  %a(class="dropdown-button" href="#!" data-activates="dash-dropdown") dashboards
+                %li
+                  %a(class="dropdown-button" href="#!" data-activates="account-dropdown")= current_user.email
+      .main
+        = yield
