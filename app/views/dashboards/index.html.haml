@@ -1,33 +1,32 @@
-- if @my_dashboards
-  %h2 Your Dashboards
-  - if @my_dashboards.length != 0
-    %table
-      %thead
-        %tr
-          %th Name
-          %th{colspan: 2}
-      %tbody
-        - @my_dashboards.each do |d|
-          %tr
-            %td= link_to d.title, d
-            %td
-              =link_to edit_dashboard_path(d) do
-                %i.material-icons.small edit
-            %td
-              = link_to dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' } do
-                %i.material-icons.small delete
-  - else
-    %p You don't have any dashboards yet.
-- if @dashboards
-  %h2 Everyone's Dashboards
-  %table
-    %thead
-      %tr
-        %th Name
-        -# %th{colspan: 2}
-    %tbody
-      - @dashboards.each do |d|
-        %tr
-          %td= link_to d.title, d
-          -# %td= link_to 'edit', edit_dashboard_path(d)
-          -# %td= link_to 'delete', dashboard_path(d), method: :delete, data: { confirm: 'Are you sure?' }
+.row
+  .col.s12.m6
+    .card
+      .card-content
+        - if @my_dashboards
+          - if @my_dashboards.length != 0
+            %ul.collection.with-header
+              %li.collection-header
+                %h4 Your Dashboards
+              - @my_dashboards.each do |dash|
+                %li.collection-item
+                  %div
+                    = link_to dash.title, dash
+                    = link_to dashboard_path(dash), method: :delete, data: { confirm: 'Are you sure?' }, class: 'secondary-content' do
+                      %i.material-icons.small delete
+                    = link_to edit_dashboard_path(dash), class: 'secondary-content' do
+                      %i.material-icons.small edit
+          - else
+            %p You don't have any dashboards yet.
+  .col.s12.m6
+    .card
+      .card-content
+        - if @dashboards
+          %ul.collection.with-header
+            %li.collection-header
+              %h4 Everyone's Dashboards
+            - @dashboards.each do |dash|
+              %li.collection-item
+                %div
+                  = link_to dash.title, dash
+        - else
+          %p No public dashboards are available yet.

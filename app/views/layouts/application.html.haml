@@ -17,7 +17,7 @@
     -# %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"}
     / Import Google Icon Font
     %link{:href => "http://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
-  %body
+  %body.teal.darken-2
     .container
       %header
         #output
@@ -36,7 +36,7 @@
             %li= link_to 'create new dashboard', new_dashboard_path
         %nav.indigo.darken-4
           .nav-wrapper
-            %span.brand-logo= link_to 'omw', root_path
+            = link_to 'OMW', root_path, class: 'brand-logo'
             %ul#nav-mobile.right.hide-on-medium-and-down
               - if user_signed_in?
                 -# dropdown triggers
