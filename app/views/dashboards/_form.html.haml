@@ -1,6 +1,6 @@
 .form
-  .row
-    = form_for @dashboard, :html => {:class => "col s12"} do |f|
+  .card
+    = form_for @dashboard, :html => {:class => "col s12 card-content"} do |f|
       .row
         - if @dashboard.errors.any?
           #error_explanation
@@ -11,10 +11,13 @@
               - @dashboard.errors.full_messages.each do |msg|
                 %li= msg
       .row
-        .input-field.col.s12
+        .input-field.col.s9
           %i.material-icons.prefix mode_edit
           = f.label :title, 'title of dashboard'
           = f.text_field :title, :placeholder => 'e.g. Acme Corp. HQ'
+        .input-field.col.s3
+          = f.check_box :public #, :class => 'filled-in'
+          = f.label :public, 'make public'
       .row
         .input-field.col.s12
           %i.material-icons.prefix mode_edit
@@ -26,14 +29,10 @@
           = f.label :desc
           = f.text_field :desc #, :placeholder => 'e.g. some motto'
       .row
-        = f.check_box :public #, :class => 'filled-in'
-        = f.label :public, 'make public'
-      .row
-        .input-field.col.s12
+        .input-field.col.s6
           = f.label :lat, 'latitude'
           = f.text_field :lat #, class: 'lat'
-      .row
-        .input-field.col.s12
+        .input-field.col.s6
           = f.label :lon, 'longitude'
           = f.text_field :lon #, class: 'lon'
       .row.hide
