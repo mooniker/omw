@@ -11,26 +11,27 @@
 = render 'stops_info'
 -# = render 'map'
 - @predictions.each do |stop|
-  .bus_stop_card.card.hoverable.container
-    %h3.center-align= "#{stop['StopName']}"
-    - if stop['Predictions'].length == 0
-      %h4.center-align No predictions
-    - else
-      %table.striped
-        %thead
-          %tr
-            %th.center-align Minutes
-            %th.center-align RouteID
-            %th.center-align DirectionText
-            -# %th DirectionNum
-            -# %th VehicleID
-            -# %th TripID
-        %tbody
-          - stop['Predictions'].each do |p|
+  .bus_stop_card.card.hoverable
+    .card-content
+      - if stop['Predictions'].length == 0
+        %span.card-title= "No predictions for #{stop['StopName']}"
+      - else
+        %span.card-title= "#{stop['StopName']}"
+        %table.striped.responsive-table
+          %thead
             %tr
-              %td.center-align= p['Minutes']
-              %td.center-align= p['RouteID']
-              %td.center-align= p['DirectionText']
-              -# %td= p['DirectionNum']
-              -# %td= p['VehicleID']
-              -# %td= p['TripID']
+              %th.center-align Minutes
+              %th.center-align RouteID
+              %th.center-align DirectionText
+              -# %th DirectionNum
+              -# %th VehicleID
+              -# %th TripID
+          %tbody
+            - stop['Predictions'].each do |p|
+              %tr
+                %td.center-align= p['Minutes']
+                %td.center-align= p['RouteID']
+                %td.center-align= p['DirectionText']
+                -# %td= p['DirectionNum']
+                -# %td= p['VehicleID']
+                -# %td= p['TripID']
