@@ -47,6 +47,7 @@ class DashboardsController < ApplicationController
   def create
     dashboard = Dashboard.new(dashboard_params.merge(user: current_user))
     if dashboard.save
+      #notice?
       redirect_to dashboard
     else
       render 'new'
@@ -56,6 +57,7 @@ class DashboardsController < ApplicationController
   def update
     dashboard = Dashboard.find(params[:id])
     if dashboard.update(dashboard_params)
+      #could this generate a 'notice'?
       redirect_to dashboard_path(dashboard)
     else
       render 'edit'
